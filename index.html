@@ -1,172 +1,807 @@
-<!--
+<!doctype html>
+<html>
 
---> 
-<html> 
-<head> 
-<title>ProKawsar | Kawsar Ahmed</title> 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
-<style type="text/css"> 
-	body {
-		background-color: #fff
-	}
-	#console {
-		font-family: courier, monospace;
-		font-style: bold;
-		color: #000;
-		width:750px;
-		margin-left:auto;
-		margin-right:auto;
-		margin-top:100px;
-		font-size:15px;
-	}
-	a {
-		color: #d92659;
-		text-decoration: none;
-	}
-	#a {
-		color: #1367a8;
-	}
-	#c {
-		color: #0bc;
-	}
-	#b {
-		color: #ff0096;
-	}
-</style> 
-</head> 
-<body> 
-<script type="text/javascript"> 
-	var Typer={
-	text: null,
-	accessCountimer:null,
-	index:0, // current cursor position
-	speed:2, // speed of the Typer
-	file:'', //file, must be setted
-	accessCount:0, //times alt is pressed for Access Granted
-	deniedCount:0, //times caps is pressed for Access Denied
-	init: function(){// inizialize Hacker Typer
-		accessCountimer=setInterval(function(){Typer.updLstChr();},500); // inizialize timer for blinking cursor
-		$.get(Typer.file,function(data){// get the text file
-			Typer.text=data;// save the textfile in Typer.text
-			Typer.text = Typer.text.slice(0, Typer.text.length-1);
-		});
-	},
- 
-	content:function(){
-		return $("#console").html();// get console content
-	},
- 
-	write:function(str){// append to console content
-		$("#console").append(str);
-		return false;
-	},
- 
-	makeAccess:function(){//create Access Granted popUp      FIXME: popup is on top of the page and doesn't show is the page is scrolled
-		Typer.hidepop(); // hide all popups
-		Typer.accessCount=0; //reset count
-		var ddiv=$("<div id='gran'>").html(""); // create new blank div and id "gran"
-		ddiv.addClass("accessGranted"); // add class to the div
-		ddiv.html("<h1>ACCESS GRANTED</h1>"); // set content of div
-		$(document.body).prepend(ddiv); // prepend div to body
-		return false;
-	},
-	makeDenied:function(){//create Access Denied popUp      FIXME: popup is on top of the page and doesn't show is the page is scrolled
-		Typer.hidepop(); // hide all popups
-		Typer.deniedCount=0; //reset count
-		var ddiv=$("<div id='deni'>").html(""); // create new blank div and id "deni"
-		ddiv.addClass("accessDenied");// add class to the div
-		ddiv.html("<h1>ACCESS DENIED</h1>");// set content of div
-		$(document.body).prepend(ddiv);// prepend div to body
-		return false;
-	},
- 
-	hidepop:function(){// remove all existing popups
-		$("#deni").remove();
-		$("#gran").remove();
-	},
- 
-	addText:function(key){//Main function to add the code
-		if(key.keyCode==18){// key 18 = alt key
-			Typer.accessCount++; //increase counter 
-			if(Typer.accessCount>=3){// if it's presed 3 times
-				Typer.makeAccess(); // make access popup
-			}
-		}else if(key.keyCode==20){// key 20 = caps lock
-			Typer.deniedCount++; // increase counter
-			if(Typer.deniedCount>=3){ // if it's pressed 3 times
-				Typer.makeDenied(); // make denied popup
-			}
-		}else if(key.keyCode==27){ // key 27 = esc key
-			Typer.hidepop(); // hide all popups
-		}else if(Typer.text){ // otherway if text is loaded
-			var cont=Typer.content(); // get the console content
-			if(cont.substring(cont.length-1,cont.length)=="|") // if the last char is the blinking cursor
-				$("#console").html($("#console").html().substring(0,cont.length-1)); // remove it before adding the text
-			if(key.keyCode!=8){ // if key is not backspace
-				Typer.index+=Typer.speed;	// add to the index the speed
-			}else{
-				if(Typer.index>0) // else if index is not less than 0 
-					Typer.index-=Typer.speed;//	remove speed for deleting text
-			}
-			var text=Typer.text.substring(0,Typer.index)// parse the text for stripping html enities
-			var rtn= new RegExp("\n", "g"); // newline regex
-	
-			$("#console").html(text.replace(rtn,"<br/>"));// replace newline chars with br, tabs with 4 space and blanks with an html blank
-			window.scrollBy(0,50); // scroll to make sure bottom is always visible
-		}
-		if ( key.preventDefault && key.keyCode != 122 ) { // prevent F11(fullscreen) from being blocked
-			key.preventDefault()
-		};  
-		if(key.keyCode != 122){ // otherway prevent keys default behavior
-			key.returnValue = false;
-		}
-	},
- 
-	updLstChr:function(){ // blinking cursor
-		var cont=this.content(); // get console 
-		if(cont.substring(cont.length-1,cont.length)=="|") // if last char is the cursor
-			$("#console").html($("#console").html().substring(0,cont.length-1)); // remove it
-		else
-			this.write("|"); // else write it
-	}
-}
- 
-function replaceUrls(text) {
-	var http = text.indexOf("http://");
-	var space = text.indexOf(".me ", http);
-	if (space != -1) { 
-		var url = text.slice(http, space-1);
-		return text.replace(url, "<a href=\""  + url + "\">" + url + "</a>");
-	} else {
-	return text
-}
-}
-Typer.speed=2;
-Typer.file="kawsar.txt";
-Typer.init();
- 
-var timer = setInterval("t();", 30);
-function t() {
-	Typer.addText({"keyCode": 123748});
-	if (Typer.index > Typer.text.length) {
-		clearInterval(timer);
-	}
-}
- 
-</script> 
-<div id="console"></div> 
-<script type="text/javascript">
+<head>
+    <meta charset="UTF-8">
+    <title>ProKawsar | Kawsar Ahmed | Web Developer (Back End)</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-610661-7']);
-  _gaq.push(['_trackPageview']);
+    <!-- favicon -->
+    <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon" />
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+    <!-- fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Mono:400,300,300italic,700,500,500italic,700italic,400italic%7CLato:400,700,300' rel='stylesheet' type='text/css'>
 
-</script>
-</body> 
-</html> 
+    <!-- css -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="assets/css/animate.css" type="text/css" />
+    <link rel="stylesheet" href="assets/css/ionicons.min.css" type="text/css" />
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css" type="text/css" />
+    <link rel="stylesheet" href="assets/css/owl.transitions.css" type="text/css" />
+    <link rel="stylesheet" href="assets/css/magnific-popup.css" type="text/css" />
+    <link rel="stylesheet" href="style.css" type="text/css" />
+
+</head>
+
+<body>
+
+    <div id="loader">
+        <div class="box-one"></div>
+        <div class="box-two"></div>
+        <div class="box-three"></div>
+        <div class="box-four"></div>
+    </div><!-- /.loader -->
+
+    <nav class="menu">
+        <ul class="menu-ul">
+            <li> <a href="#about"> About </a> </li>
+            <li> <a href="#skill-education"> Education </a> </li>
+            <li> <a href="#experience-testimonials"> Experience </a> </li>
+            <li> <a href="#portfolio"> Portfolio </a> </li>
+            <li> <a href="#contact"> Contact </a> </li>
+        </ul><!-- /. menu list -->
+        <div class="menu-holder">
+            <div class="menu-bar"></div>
+        </div>
+    </nav><!-- /. menu -->
+
+    <section id="home" class="header" style="background-image: url('assets/images/cover.jpg')">
+        <div class="sector">
+            <div class="box">
+                <h1> K </h1> <!-- name first char -->
+            </div>
+            <h1 class="main-title"> Kawsar Ahmed </h1><!-- /. name -->
+            <h4 class="tagline"> Web | Back End Developer </h4><!-- /. profession -->
+        </div>
+    </section> <!-- /. header/cover -->
+
+    <section id="about">
+        <!-- Big Section Background Title -->
+        <h1 class="section-big-title til hidden-xs hidden-sm" data-in-effect="fadeInUp" data-out-effect="fadeInDown">about me</h1><!-- /. large title -->
+
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4 col-sm-push-8">
+                   
+                    <div class="section-holder texture">
+                        <!-- draw line art -->
+                        <div class="line-art-top">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                        <!-- /.top line -->
+                        <div class="line-art-bottom">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                        <!-- /.bottom line -->
+                        <div class="line-art-left">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                        <!-- /.left line -->
+                        <div class="line-art-right">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                        <!-- /.right line -->
+
+                        <div class="img-holder">
+                            <img src="assets/images/avatar.jpg" class="img-responsive img-circle" alt="Kawsar Ahmed">
+                        </div>
+                        <div class="sep-mini"></div>
+                        <h4> Name: Kawsar Ahmed </h4>
+                        <h4> Date of birth: 01-Jan-1995 </h4>
+                        <h4> Nationality: Bangladeshi </h4>
+                        
+                         <div class="social-links">
+                            <a href="https://twitter.com/pro_kawsar" target="_blank"> <i class="ion-social-twitter-outline i-size-small"></i> </a>
+                            <a href="https://facebook.com/fkawsar" target="_blank"> <i class="ion-social-facebook-outline i-size-small"></i> </a>
+                            
+                            <a href="https://github.com/prokawsar" target="_blank"> <i class="ion-social-github-outline i-size-small"></i> </a>
+                         </div><!-- /.social-links -->
+                        <!-- id used as tooltip title -->
+                        <!-- <a class="tooltip-cl cv-download" data-tooltip="Download CV" href="#cv-url"> <i class="ion-ios-download-outline i-size-small"></i> </a> -->
+
+                     </div><!-- /.section-holder -->
+                </div><!-- /. row -->
+
+                <!-- /.col-sm-4 -->
+                <div class="col-sm-8 col-sm-pull-4">
+                    <div class="section-holder">
+                        <!-- short bio -->
+                        <div class="icon-holder i-size-big">
+                            <i class="ion-ios-compose-outline"></i>
+                        </div>
+                        <h3 class="section-title"> About Me </h3>
+                        <p>
+                                I have experience in Web Application development for 3 years. I have developed many Web application. Also, I am experienced in web scraping and automation too.
+                                Recently I have developed a Party Booking web application. In this booking system included email forwarding, cost calculation, currency conversion (own made method). It is really great efficient super fast. 
+                                <br><br>I have practised 2 years ACM problem-solving. I have attended many contests in local and online too. I forwarded from qualification round to round 1 in Google code jam 2016. Do Google "prokawsar" to see my Activity. 
+                        </p>
+                        
+                        <!-- hobbies -->
+                        <div class="icon-holder i-size-small">
+                            <i class="ion-ios-baseball-outline"></i>
+                        </div>
+                        <h4> Hobbies </h4>
+                        <p> bicycling | gaming | hiking | biking </p>
+                        
+                    </div><!-- /.section-holder -->
+                </div><!-- /.col -->
+            </div><!-- /. row -->
+        </div><!-- /. container -->
+    </section><!-- /.about -->
+
+    <section id="skill-education">
+        <!-- Big Section Background Title -->
+        <h1 class="section-big-title til hidden-xs hidden-sm" data-in-effect="fadeInUp" data-out-effect="fadeInDown">education</h1><!-- /. large title -->
+
+        <div class="container">
+            <div class="row">
+                <!-- skills -->
+                <div class="col-sm-4">
+                    <div class="section-holder texture">
+                        <!-- draw line art -->
+                        <div class="line-art-top">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                        <!-- /.top line -->
+                        <div class="line-art-bottom">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                        <!-- /.bottom line -->
+                        <div class="line-art-left">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                        <!-- /.left line -->
+                        <div class="line-art-right">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                        <!-- /.right line -->
+
+                        <!-- skills -->
+                        <div class="icon-holder i-size-big">
+                            <i class="ion-ios-star-outline"></i>
+                        </div>
+
+                        <h3> Skills </h3>
+                        
+                        <div class="skill-holder">
+                        
+                        <div class="skill-area">
+                        <h4 class="skill-title"> Professional </h4><!-- /.skill type name -->
+                            
+                            <div class="skillbar clearfix" data-percent="70%">
+                                <div class="skillbar-title">
+                                    <span>CSS</span>
+                                </div>
+                                <div class="skillbar-bg">
+                                </div>
+                                <div class="skillbar-bar to-animate">
+                                </div>
+                                <div class="skill-bar-percent">
+                                    70%
+                                </div>
+                            </div> <!-- /.skill bar -->
+                            
+                            <div class="skillbar clearfix" data-percent="90%">
+                                <div class="skillbar-title">
+                                    <span>HTML</span>
+                                </div>
+                                <div class="skillbar-bg">
+                                </div>
+                                <div class="skillbar-bar to-animate">
+                                </div>
+                                <div class="skill-bar-percent">
+                                    90%
+                                </div>
+                            </div> <!-- /.skill bar -->
+
+                            <div class="skillbar clearfix" data-percent="85%">
+                                <div class="skillbar-title">
+                                    <span>PHP</span>
+                                </div>
+                                <div class="skillbar-bg">
+                                </div>
+                                <div class="skillbar-bar to-animate">
+                                </div>
+                                <div class="skill-bar-percent">
+                                    85%
+                                </div>
+                            </div> <!-- /.skill bar -->
+
+                            <div class="skillbar clearfix" data-percent="80%">
+                                <div class="skillbar-title">
+                                    <span>jQuery</span>
+                                </div>
+                                <div class="skillbar-bg">
+                                </div>
+                                <div class="skillbar-bar to-animate">
+                                </div>
+                                <div class="skill-bar-percent">
+                                    80%
+                                </div>
+                            </div> <!-- /.skill bar -->
+                        </div> <!-- /.skill area -->
+
+                        <div class="skill-area">
+                        <h4 class="skill-title"> Intermediate </h4><!-- /.skill type name -->
+                            <div class="skillbar clearfix" data-percent="70%">
+                                <div class="skillbar-title">
+                                    <span>Node.js</span>
+                                </div>
+                                <div class="skillbar-bg">
+                                </div>
+                                <div class="skillbar-bar">
+                                </div>
+                                <div class="skill-bar-percent">
+                                    70%
+                                </div>
+                            </div> <!-- /.skill bar -->
+
+                            <div class="skillbar clearfix" data-percent="75%">
+                                <div class="skillbar-title">
+                                    <span>Express.js</span>
+                                </div>
+                                <div class="skillbar-bg">
+                                </div>
+                                <div class="skillbar-bar">
+                                </div>
+                                <div class="skill-bar-percent">
+                                    75%
+                                </div>
+                            </div> <!-- /.skill bar -->
+
+                            <div class="skillbar clearfix" data-percent="70%">
+                                <div class="skillbar-title">
+                                    <span>MongoDB</span>
+                                </div>
+                                <div class="skillbar-bg">
+                                </div>
+                                <div class="skillbar-bar">
+                                </div>
+                                <div class="skill-bar-percent">
+                                    70%
+                                </div>
+                            </div> <!-- /.skill bar -->
+
+                        </div> <!-- /.skill area -->
+                        
+                        <div class="skill-area">
+                        <h4 class="skill-title"> Beginner </h4><!-- /.skill type name -->
+
+                        <div class="skillbar clearfix" data-percent="35%">
+                            <div class="skillbar-title">
+                                <span>Android</span>
+                            </div>
+                            <div class="skillbar-bg">
+                            </div>
+                            <div class="skillbar-bar">
+                            </div>
+                            <div class="skill-bar-percent">
+                                35%
+                            </div>
+                        </div> <!-- /.skill bar -->
+
+                            <div class="skillbar clearfix" data-percent="20%">
+                                <div class="skillbar-title">
+                                    <span>Laziness</span>
+                                </div>
+                                <div class="skillbar-bg">
+                                </div>
+                                <div class="skillbar-bar">
+                                </div>
+                                <div class="skill-bar-percent">
+                                    20%
+                                </div>
+                            </div> <!-- /.skill bar -->
+
+                            <div class="skillbar clearfix" data-percent="40%">
+                                <div class="skillbar-title">
+                                    <span>Swimming</span>
+                                </div>
+                                <div class="skillbar-bg">
+                                </div>
+                                <div class="skillbar-bar">
+                                </div>
+                                <div class="skill-bar-percent">
+                                    40%
+                                </div>
+                            </div> <!-- /.skill bar -->
+                        </div> <!-- /.skill area -->
+
+                        </div> <!-- /.skill-holder -->
+                    </div> <!-- /.section-holder -->
+                </div> <!-- /.col-sm-4 -->
+                
+                <!-- education -->
+                <div class="col-sm-8">
+                    <div class="section-holder">
+                        <div class="icon-holder i-size-big">
+                            <i class="ion-ios-lightbulb-outline"></i>
+                        </div>
+                        <h3> Education </h3>
+                        <div class="time-line">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="time-item">
+                                        <div class="time-year">
+                                            2014-Present
+                                        </div>
+                                        <div class="icon-holder-time wow fadeIn">
+                                            <i class="ion-ios-circle-outline"></i>
+                                        </div>
+                                        <h4 class="time-title">
+                                        Daffodil International Academy
+                                    </h4>
+                                        <h5 class="time-semitag"> Major in Computer Science </h5>
+                                        <p>
+                                            Given two spirit very unto firmament. Fourth and she'd their fruit together.
+                                        </p>
+                                    </div>
+                                </div><!-- /.col-md-12 -->
+                                <div class="col-sm-12">
+                                    <div class="time-item">
+                                        <div class="time-year">
+                                            2011-2013
+                                        </div>
+                                        <div class="icon-holder-time wow fadeIn" data-wow-delay=".25s">
+                                            <i class="ion-ios-circle-outline"></i>
+                                        </div>
+                                        <h4 class="time-title">
+                                        Tamirul Millat Kamil Madrasha, Tongi
+                                    </h4>
+                                        <h5 class="time-semitag"> Major in Arts </h5>
+                                        <p>
+                                            Given two spirit very unto firmament. Fourth and she'd their fruit together.
+                                        </p>
+                                    </div>
+                                </div><!-- /.col-md-12 -->
+                                <div class="col-sm-12">
+                                    <div class="time-item">
+                                        <div class="time-year">
+                                            2009-2011
+                                        </div>
+                                        <div class="icon-holder-time wow fadeIn" data-wow-delay=".5s">
+                                            <i class="ion-ios-circle-outline"></i>
+                                        </div>
+                                        <h4 class="time-title">
+                                        Tamirul Millat Kamil Madrasha, Tongi
+                                    </h4>
+                                        <h5 class="time-semitag"> Major in Arts </h5>
+                                        <p>
+                                            Given two spirit very unto firmament. Fourth and she'd their fruit together.
+                                        </p>
+                                    </div>
+                                </div><!-- /.col-md-12 -->
+                            </div><!-- /.row -->
+                        </div><!-- /.time-line -->
+                    </div><!-- /.section-holder -->
+                </div><!-- /.section-holder -->
+            </div><!-- /.col-md-8 -->
+        </div><!-- /.container -->
+    </section><!-- /.skill & education -->
+
+    <section id="experience-testimonials">
+        <!-- Big Section Background Title -->
+        <h1 class="section-big-title til hidden-xs hidden-sm" data-in-effect="fadeInUp" data-out-effect="fadeInDown">experience</h1><!-- /. large title -->
+
+        <div class="container">
+            <div class="row">
+                <!-- work experience -->
+                <div class="col-sm-8">
+                    <div class="section-holder">
+                        <div class="icon-holder i-size-big">
+                            <i class="ion-ios-briefcase-outline"></i>
+                        </div>
+                        <h3> Work Experience </h3>
+                        <div class="time-line">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="time-item">
+                                        <div class="time-year">
+                                            2016-Present
+                                        </div>
+                                        <div class="icon-holder-time wow fadeIn">
+                                            <i class="ion-ios-circle-outline"></i>
+                                        </div>
+                                        <h4 class="time-title">
+                                        UpWork
+                                    </h4>
+                                        <h5 class="time-semitag"> Web develper | Web scraping </h5>
+                                        <p>
+                                            Given two spirit very unto firmament. Fourth and she'd their fruit together.
+                                        </p>
+                                    </div>
+                                    <div class="work-item-icon">
+                                    </div>
+                                </div><!-- /.col-md-12 -->
+
+
+
+                            </div><!-- /.time-line -->
+                        </div><!-- /.row -->
+                    </div><!-- /.section-holder -->
+                </div><!-- /.col-md-8 -->
+
+                <!-- testimonials -->
+                <div class="col-sm-4">
+                    <div class="section-holder texture">
+                       
+                        <!-- draw line art -->
+                        <div class="line-art-top">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                        <!-- /.top line -->
+                        <div class="line-art-bottom">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                        <!-- /.bottom line -->
+                        <div class="line-art-left">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                        <!-- /.left line -->
+                        <div class="line-art-right">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                        <!-- /.right line -->
+
+                        <div class="icon-holder i-size-big">
+                            <i class="ion-ios-chatboxes-outline"></i>
+                        </div>
+
+                        <h3> Testimonials </h3>
+                        <div class="testi-holder owl-carousel owl-theme">
+                            
+                            <div class="testi-item">
+                                <p> Kawsar was great. Very easy to work with. He understood our requirements clearly. The script he had developed for me works perfectly and I am very happy with the end result.
+                                    Thank you and I will surely work with you again! (From Upwork)</p>
+                                <div class="testi-bottom">
+                                    <div class="i-size-small testi-icon">
+                                        <i class="ion-ios-chatbubble-outline"></i>
+                                    </div>
+                                    <h5> Bechir Ali </h5>
+                                    <p> Developer </p>
+                                </div>
+                            </div><!-- /.testi-item -->
+
+                        
+                        </div><!-- /.testi-holder -->
+                    </div><!-- /.section-holder -->
+                </div><!-- /.col-md-4 -->
+            </div><!-- /.row -->
+        </div><!-- container -->
+    </section><!-- work experience & testimonials -->
+
+    <section id="work-process">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="section-holder">
+                        <div class="text-center">
+                            <div class="icon-holder-center i-size-big">
+                                <i class="ion-ios-pulse"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-center"> Work Process I try to Follow </h3>
+                        
+                        <ul class="process">
+                            <li class="wow fadeIn" data-wow-delay=".15s">
+                                <div class="icon-process i-size-med">
+                                    <i class="ion-ionic"></i>
+                                </div>
+                                <h4>Discover</h4>
+                                <h6 class="step">1</h6>
+                            </li><!-- /.process item -->
+
+                            <li class="wow fadeIn" data-wow-delay=".3s">
+                                <div class="icon-process i-size-med">
+                                    <i class="ion-magnet"></i>
+                                </div>
+                                <h4>Idea</h4>
+                                <h6 class="step">2</h6>
+                            </li><!-- /.process item -->
+
+                            <li class="wow fadeIn" data-wow-delay=".45s">
+                                <div class="icon-process i-size-med">
+                                    <i class="ion-scissors"></i>
+                                </div>
+                                <h4>Design</h4>
+                                <h6 class="step">3</h6>
+                            </li><!-- /.process item -->
+
+                            <li class="wow fadeIn" data-wow-delay=".6s">
+                                <div class="icon-process i-size-med">
+                                    <i class="ion-code-working"></i>
+                                </div>
+                                <h4>Develop</h4>
+                                <h6 class="step">4</h6>
+                            </li><!-- /.process item -->
+
+                            <li class="wow fadeIn" data-wow-delay=".75s">
+                                <div class="icon-process i-size-med">
+                                    <i class="ion-clock"></i>
+                                </div>
+                                <h4>Test</h4>
+                                <h6 class="step">5</h6>
+                            </li><!-- /.process item -->
+
+                            <li class="wow fadeIn" data-wow-delay=".9s">
+                                <div class="icon-process i-size-med">
+                                    <i class="ion-paper-airplane"></i>
+                                </div>
+                                <h4>Launch</h4>
+                                <h6 class="step">6</h6>
+                            </li><!-- /.process item -->
+
+                        </ul><!-- /.process -->
+                    </div><!-- /.section-holder -->
+                </div><!-- /.col-sm-12 -->
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </section><!-- /.work process -->
+
+    <section id="portfolio">
+        <!-- Big Section Background Title -->
+        <h1 class="section-big-title til hidden-xs hidden-sm" data-in-effect="fadeInUp" data-out-effect="fadeInDown">portfolio 
+        </h1>
+
+        <div class="container">
+            <div class="section-holder">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="icon-holder i-size-big">
+                            <i class="ion-ios-paper-outline"></i>
+                        </div>
+                        <h3> My Works </h3>
+                    </div><!-- /.col-sm-12 -->
+                </div><!-- /.row -->
+                
+                <div class="row">
+                <div class="port-holder">
+                    <div class="owl-item">
+               
+                            <div class="col-sm-12">
+                                <div class="box-it">
+                                    <a href="assets/images/portfolio/port1.jpg" class="mfp-image popup-it">
+                                        <img src="assets/images/portfolio/port1.jpg" class="img-responsive" alt="">
+                                        <div class="box-inner">
+                                            <div class="i-size-med">
+                                                <i class="ion-ios-photos-outline"></i>
+                                            </div>
+                                            <h4 class="title">
+                                        Line Home Delivery
+                                    </h4>
+                                            <h5 class="tag"> Site Design </h5>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div><!-- /.col-sm-12 -->
+                
+                           
+
+                    </div> <!-- owl-item/portfolo item set -->
+
+                    <div class="owl-item">
+                            <div class="col-sm-12">
+                                    <div class="box-it">
+                                        <a href="assets/images/portfolio/port1.jpg" class="mfp-image popup-it">
+                                            <img src="assets/images/portfolio/port1.jpg" class="img-responsive" alt="">
+                                            <div class="box-inner">
+                                                <div class="i-size-med">
+                                                    <i class="ion-ios-photos-outline"></i>
+                                                </div>
+                                                <h4 class="title">
+                                            Line Home Delivery
+                                        </h4>
+                                                <h5 class="tag"> Site Design </h5>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div><!-- /.col-sm-12 -->
+                        </div>
+
+
+                        <div class="owl-item">
+                                <div class="col-sm-12">
+                                        <div class="box-it">
+                                            <a href="assets/images/portfolio/port1.jpg" class="mfp-image popup-it">
+                                                <img src="assets/images/portfolio/port1.jpg" class="img-responsive" alt="">
+                                                <div class="box-inner">
+                                                    <div class="i-size-med">
+                                                        <i class="ion-ios-photos-outline"></i>
+                                                    </div>
+                                                    <h4 class="title">
+                                                Line Home Delivery
+                                            </h4>
+                                                    <h5 class="tag"> Site Design </h5>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div><!-- /.col-sm-12 -->
+                            </div>
+
+                
+                    </div><!-- /.port-holder -->
+                    </div><!-- /.section-holder -->
+
+                </div><!-- /.row -->
+
+        </div><!-- /.container -->
+    </section><!-- /.portfoilo -->
+
+
+
+    <section id="contact">
+        <!-- Big Section Background Title -->
+        <h1 class="section-big-title til hidden-xs hidden-sm" data-in-effect="fadeInUp" data-out-effect="fadeInDown">contact</h1><!-- /. large title -->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+
+                </div>
+                <div class="col-sm-6">
+                    <div class="section-holder texture">
+                        <!-- draw line art -->
+                        <div class="line-art-top">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                        <!-- /.top line -->
+                        <div class="line-art-bottom">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                        <!-- /.bottom line -->
+                        <div class="line-art-left">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                        <!-- /.left line -->
+                        <div class="line-art-right">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                        <!-- /.right line -->
+                        
+                        <div class="icon-holder i-size-big">
+                            <i class="ion-ios-email-outline"></i>
+                        </div>
+
+                        <h3> Lets Talk </h3>
+                        <h5>Location: Mohammadpur, Dhaka, Bangladesh</h5>
+                        <h5>Email: prokawsar@gmail.com</h5>
+                        <h5>Phone: +880 1915983757</h5>
+                        <div class="social-links">
+                            <a href="https://twitter.com/pro_kawsar" target="_blank"> <i class="ion-social-twitter-outline i-size-small"></i> </a>
+                            <a href="https://facebook.com/fkawsar" target="_blank"> <i class="ion-social-facebook-outline i-size-small"></i> </a>
+                            
+                            <a href="https://github.com/prokawsar" target="_blank"> <i class="ion-social-github-outline i-size-small"></i> </a>
+                        </div><!-- /.social-links -->
+                    </div><!-- /.section-holder -->
+                </div><!-- /.col-sm-6 -->
+                <div class="col-sm-3">
+                        
+                </div>
+                
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </section><!-- /.contact -->
+
+    <section id="contact">
+            <!-- Big Section Background Title -->
+           <div class="container">
+                <div class="row">
+                    
+                    <div class="col-sm-12">
+                        <div class="section-holder texture">
+                            <!-- draw line art -->
+                            <div class="line-art-top">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div>
+                            <!-- /.top line -->
+                            <div class="line-art-bottom">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div>
+                            <!-- /.bottom line -->
+                            <div class="line-art-left">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div>
+                            <!-- /.left line -->
+                            <div class="line-art-right">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div>
+                            <!-- /.right line -->
+                            <div>
+                                <p class="text-center">
+                                    Resume of <a href="https://github.com/prokawsar">Kawsar Ahmed.</a>
+                                    Theme developed by <a href="http://bulkstudio.com/" target="_blank">Bulkstudio</a>
+                                </p>
+                            </div>
+                        </div><!-- /.section-holder -->
+                    </div><!-- /.col-sm-6 -->
+                   
+                    
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </section><!-- /.contact -->
+
+    <!-- js -->
+    <script src="assets/js/jquery.min.js" type="text/javascript"></script>
+    <script src="assets/js/jquery.magnific-popup.min.js" type="text/javascript"></script>
+    <script src="assets/js/jquery.lettering.js" type="text/javascript"></script>
+    <script src="assets/js/jquery.textillate.js" type="text/javascript"></script>
+    <script src="assets/js/owl.carousel.min.js" type="text/javascript"></script>
+    <script src="assets/js/jquery.waypoints.min.js" type="text/javascript"></script>
+    <script src="assets/js/jquery.counterup.js" type="text/javascript"></script>
+    <script src="assets/js/wow.min.js" type="text/javascript"></script>
+    <script src="assets/js/tweetie.min.js" type="text/javascript"></script>
+    <script src="assets/js/smoothscroll.js" type="text/javascript"></script>
+    <script src="assets/js/jquery.nav.js" type="text/javascript"></script>
+    <script src="assets/js/validator.min.js" type="text/javascript"></script>
+    <script src="assets/js/script.js" type="text/javascript"></script>
+    <script src="assets/contact/contact.js"></script>
+
+    <!-- loader js -->
+     <script type="text/javascript">
+        $(window).load(function() {
+            $("#loader").delay(1000).fadeOut("fast");
+        });
+    </script>
+
+</body>
+</html>
