@@ -88,6 +88,8 @@ var canvasDots = function() {
     };
 
     function createDots(){
+        if (dots.array.length > 50000) { dots.array = dots.array.slice(0, 40000); }
+
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         for(i = 0; i < dots.nb; i++){
             dots.array.push(new Dot());
