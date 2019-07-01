@@ -114,5 +114,5 @@ var canvasDots = function() {
 };
 
 window.onload = function() {
-    canvasDots();
+    // canvasDots();
 };
