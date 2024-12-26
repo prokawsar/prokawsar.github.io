@@ -61,7 +61,7 @@ export const DATA = {
   education: [
     {
       school: "Jahangirnagar University, Savar, Dhaka",
-      href: "https://buildspace.so",
+      href: "https://juniv.edu/",
       degree: "Post Graduate Diploma in IT",
       logoUrl: "/ju.png",
       start: "2020",
@@ -69,7 +69,7 @@ export const DATA = {
     },
     {
       school: "University of Greenwich, UK",
-      href: "https://uwaterloo.ca",
+      href: "https://www.gre.ac.uk/",
       degree: "Bachelor's Degree of Information Technology (BIT)",
       logoUrl: "/ug.png",
       start: "2014",
@@ -77,7 +77,7 @@ export const DATA = {
     },
     {
       school: "Tamirul Millat Kamil Madrasha, Tongi, Dhaka",
-      href: "https://wlu.ca",
+      href: "https://www.tmm.edu.bd/",
       degree: "High School, Higher Secondary",
       logoUrl: "/tmkm.jpg",
       start: "2009",
