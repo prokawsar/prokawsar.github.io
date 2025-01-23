@@ -61,7 +61,7 @@ export const DATA = {
   education: [
     {
       school: "Jahangirnagar University, Savar, Dhaka",
-      href: "https://juniv.edu/",
+      href: "https://buildspace.so",
       degree: "Post Graduate Diploma in IT",
       logoUrl: "/ju.png",
       start: "2020",
@@ -69,7 +69,7 @@ export const DATA = {
     },
     {
       school: "University of Greenwich, UK",
-      href: "https://www.gre.ac.uk/",
+      href: "https://uwaterloo.ca",
       degree: "Bachelor's Degree of Information Technology (BIT)",
       logoUrl: "/ug.png",
       start: "2014",
@@ -77,7 +77,7 @@ export const DATA = {
     },
     {
       school: "Tamirul Millat Kamil Madrasha, Tongi, Dhaka",
-      href: "https://www.tmm.edu.bd/",
+      href: "https://wlu.ca",
       degree: "High School, Higher Secondary",
       logoUrl: "/tmkm.jpg",
       start: "2009",
@@ -262,6 +262,25 @@ export const DATA = {
     },
   ],
   works: [
+    {
+      company: "TeamHosty",
+      title: "Frontend Engineer",
+      dates: "July 1st 2024 - Present",
+      location: "Lithuania (Remote)",
+      linkedin: "https://www.linkedin.com/company/teamhosty",
+      description: [
+        "Developing dashboard for infrastructure portal that is being used for internal clients.",
+        "Worked on 20+ UI components for a making customized admin panel.",
+      ],
+      image: "/teamhosty.jpg",
+      links: [
+        {
+          title: "Site",
+          icon: <Icons.globe className="h-4 w-4" />,
+          href: "https://www.teamhosty.com/",
+        },
+      ],
+    },
     {
       company: "Shopping Cart Elite (HireOnceAndForever)",
       title: "Frontend Engineer",
