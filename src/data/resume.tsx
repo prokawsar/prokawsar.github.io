@@ -4,7 +4,7 @@ import { HomeIcon } from "lucide-react";
 export const DATA = {
   name: "Kawsar Ahmed",
   initials: "KA",
-  url: "https://prokawsar.dev",
+  url: "https://prokawsar.github.io/",
   location: "Dhaka, Bangladesh",
   locationLink: "https://www.google.com/maps/place/dhaka",
   description:
@@ -46,6 +46,13 @@ export const DATA = {
         name: "X",
         url: "https://x.com/pro_kawsar",
         icon: Icons.x,
+
+        navbar: true,
+      },
+      Resume: {
+        name: "Resume",
+        url: "https://drive.google.com/file/d/1Is-jw20KspoaF6Wd3lD_sLcmQ1Mn8nAc/view?usp=sharing",
+        icon: Icons.globe,
 
         navbar: true,
       },
@@ -143,7 +150,7 @@ export const DATA = {
       links: [
         {
           type: "Live",
-          href: "https://ark-builders.github.io/website2/",
+          href: "https://ark-builders.dev",
           icon: <Icons.globe className="size-3" />,
         },
         {
@@ -298,6 +305,11 @@ export const DATA = {
           icon: <Icons.globe className="h-4 w-4" />,
           href: "https://www.hireonceandforever.com/articles/hire-once-and-forever-home/",
         },
+        {
+          title: "Reference letter",
+          icon: <Icons.globe className="h-4 w-4" />,
+          href: "https://drive.google.com/file/d/1oWA-SHGRYc6h5dBoTa8A3ESG7LMG-I8g/view?usp=sharing",
+        },
       ],
     },
     {
@@ -344,6 +356,11 @@ export const DATA = {
           title: "Site",
           icon: <Icons.globe className="h-4 w-4" />,
           href: "https://kws3.media/",
+        },
+        {
+          title: "Reference letter",
+          icon: <Icons.globe className="h-4 w-4" />,
+          href: "https://drive.google.com/file/d/1FX0vPWlF26nDBMpKCVMwrooZ_NZfhL0U/view?usp=sharing",
         },
       ],
     },
