@@ -291,7 +291,7 @@ export const DATA = {
     {
       company: "Shopping Cart Elite (HireOnceAndForever)",
       title: "Frontend Engineer",
-      dates: "December 1st 2020 - January 3rd, 2024",
+      dates: "October 1st 2021 - January 3rd, 2024",
       location: "New York (Remote)",
       linkedin: "https://www.linkedin.com/company/shopping-cart-elite",
       description: [
