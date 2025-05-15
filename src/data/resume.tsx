@@ -315,7 +315,7 @@ export const DATA = {
     {
       title: "Frontend Engineer",
       company: "xBase",
-      dates: "January 20th - 21st, 2018",
+      dates: "May 1st 2023 - August 1st, 2023",
       location: "Davis, California",
       description: [
         "Redesigned the app UI, increased user satisfaction by 40%.",
