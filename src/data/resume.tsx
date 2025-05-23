@@ -10,7 +10,7 @@ export const DATA = {
   description:
     "Full Stack Developer. I love building things and helping people. Very active on Email.",
   summary:
-    "I specialize in building scalable, user-centric web and mobile applications with modern technologies like SvelteKit, TypeScript, and Node.js. From real-time collaboration tools to API integrations, I deliver impactful solutions tailored to business needs. Let's create something exceptional together.",
+    "I specialize in building scalable, user-centric web and mobile applications with modern technologies like SvelteKit, React, TypeScript, and Node.js. From real-time collaboration tools to API integrations, I deliver impactful solutions tailored to business needs.",
   avatarUrl: "/me.jpeg",
   skills: [
     "Svelte",
